@@ -9,10 +9,10 @@
     - Excluir registro
     - Gerar arquivo contendo os registros
 
-### Libs utilizadas
+### Libs utilizadas:
     - express@4.18.1
     - nodemon@2.0.16
     - lib/fs.js
 
-### Versão do NodeJS
+### Versão do NodeJS:
     - v16.13.2
