@@ -2,8 +2,8 @@ POST http://localhost:4002/products
 Content-Type: application/json
 
 {
-    "name": "Camiseta de Praia",
-    "price": 45.00
+    "name": "Bermuda de Surf",
+    "price": 65.00
 }
 
 ###

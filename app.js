@@ -1,11 +1,20 @@
 const express = require("express");
 const { randomUUID } = require("crypto");
+const { writeFile, readFile, appendFile } = require("fs");
 
 const app = express();
 app.use(express.json());
 
 // simulando banco de dados
-const products = [];
+let products = [];
+
+readFile("produtos.json", "utf-8", (err, data) => {
+    if (err) {
+        console.log("Erro ao inserir o registro.");
+    } else {
+        products = JSON.parse(data);
+    }
+});
 
 /*
 GET -> buscar um registro
@@ -32,6 +41,19 @@ app.post("/products", (request, response) => {
     };
 
     products.push(product);
+    appendFile("produtos.json", JSON.stringify(product), (err, data) => {
+        if (err) {
+            console.log("Erro ao inserir o novo item.");
+        }
+    });
+
+    writeFile("produtos.json", JSON.stringify(product), (err) => {
+        if (err) {
+            console.log("Erro ao criar registro.");
+        } else {
+            console.log("Registro inserido com sucesso!");
+        }
+    });
 
     return response.json(products);
 });
