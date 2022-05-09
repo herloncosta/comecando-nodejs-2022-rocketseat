@@ -1,6 +1,6 @@
 const express = require("express");
 const { randomUUID } = require("crypto");
-const { writeFile, readFile, appendFile } = require("fs");
+const fs = require("fs");
 
 const app = express();
 app.use(express.json());
@@ -8,27 +8,13 @@ app.use(express.json());
 // simulando banco de dados
 let products = [];
 
-readFile("produtos.json", "utf-8", (err, data) => {
+fs.readFile("products.json", "utf-8", (err, data) => {
     if (err) {
-        console.log("Erro ao inserir o registro.");
+        console.log(err);
     } else {
         products = JSON.parse(data);
     }
 });
-
-/*
-GET -> buscar um registro
-POST -> inserir um registro
-PUT -> alterar um registro
-DELETE -> excluir um registro
-*/
-
-/*
-body -> sempre que eu quiser enviar dados para uma aplicação
-params -> parâmetros passados em uma rota /products/something...
-query -> parâmetros que fazem parte da rota mas não são obrigatórios
-/products/something?id=135151&value=gsfg415a1ga
-*/
 
 // cadastrar produtos
 app.post("/products", (request, response) => {
@@ -41,19 +27,8 @@ app.post("/products", (request, response) => {
     };
 
     products.push(product);
-    appendFile("produtos.json", JSON.stringify(product), (err, data) => {
-        if (err) {
-            console.log("Erro ao inserir o novo item.");
-        }
-    });
 
-    writeFile("produtos.json", JSON.stringify(product), (err) => {
-        if (err) {
-            console.log("Erro ao criar registro.");
-        } else {
-            console.log("Registro inserido com sucesso!");
-        }
-    });
+    updateProductFile();
 
     return response.json(products);
 });
@@ -80,6 +55,8 @@ app.put("/products/:id", (request, response) => {
     // reatribuição de valores do objeto que possui o índice passado
     products[productIndex] = { ...products[productIndex], name, price };
 
+    updateProductFile();
+
     return response.json({ message: "Produto alterado com sucesso! " });
 });
 
@@ -91,7 +68,19 @@ app.delete("/products/:id", (request, response) => {
     // remove do array o objeto que possui o índice passado
     products.splice(productIndex, 1);
 
+    updateProductFile();
+
     return response.json({ message: "Produto removido com sucesso!" });
 });
 
-app.listen(4002, () => console.log("Servidor está rodando na porta 4002."));
+function updateProductFile() {
+    fs.writeFile("products.json", JSON.stringify(products), (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Produto inserido.");
+        }
+    });
+}
+
+app.listen(4003, () => console.log("Servidor está rodando na porta 4003."));

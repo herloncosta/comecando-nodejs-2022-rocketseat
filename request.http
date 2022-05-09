@@ -1,25 +1,25 @@
-POST http://localhost:4002/products
+POST http://localhost:4003/products
 Content-Type: application/json
 
 {
-    "name": "Bermuda de Surf",
-    "price": 65.00
+    "name": "Geladinho",
+    "price": 1.50
 }
 
 ###
 
-GET http://localhost:4002/products/
+GET http://localhost:4003/products/
 
 ###
 
-PUT http://localhost:4002/products/7f3c7a
+PUT http://localhost:4003/products/fd284f
 Content-Type: application/json
 
 {
-    "name": "Lápis 0.5",
+    "name": "Picolé Recheado",
     "price": 3.00
 }
 
 ###
 
-DELETE http://localhost:4002/products/7f3c7a
+DELETE http://localhost:4003/products/04009c
