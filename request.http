@@ -1,0 +1,25 @@
+POST http://localhost:4002/products
+Content-Type: application/json
+
+{
+    "name": "Camiseta de Praia",
+    "price": 45.00
+}
+
+###
+
+GET http://localhost:4002/products/
+
+###
+
+PUT http://localhost:4002/products/7f3c7a
+Content-Type: application/json
+
+{
+    "name": "Lápis 0.5",
+    "price": 3.00
+}
+
+###
+
+DELETE http://localhost:4002/products/7f3c7a
